@@ -1,1 +1,8 @@
-{"users":[{"name":"Tony","ok?":"ok"}],"rooms":[]}
+{
+    "users": [{
+        "name": "Tony",
+        "number": 1,
+        "obj": {}
+    }],
+    "rooms": []
+}
