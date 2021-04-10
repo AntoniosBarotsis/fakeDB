@@ -1,7 +1,7 @@
 module.exports = { log, warning, error, mapped }
 
 function log(str) {
-    console.log("\033[32m[ GET ]    \033[0m %s", str)
+    console.log("\033[32m[ LOG ]    \033[0m %s", str)
 }
 
 function warning(str) {
