@@ -1,11 +1,16 @@
-const express = require("express");
-const morgan = require('morgan');
+const express = require("express")
+const morgan = require('morgan')
 const dataMapper = require("./util/dataMapper")
 const print = require("./util/log")
 
 const PORT = process.env.PORT || 8000
 
 const app = express();
+
+app.use(express.json());
+app.use(express.urlencoded({
+  extended: true
+}));
 
 app.use(morgan(`\x1b[33m:method\x1b[0m \x1b[36m:url\x1b[0m :statusColor`));
 
@@ -19,7 +24,9 @@ app.get(mappings, (req, res) => {
   res.send(dataMapper.getDataInPath(url));
 });
 app.post(mappings, (req, res) => {
-    res.send("Hello, world!");
+    let result = dataMapper.save(req.url.replace(/^\//, ''), req.body)
+
+    res.sendStatus(result)
 });
 app.put(mappings, (req, res) => {
     res.send("Hello, world!");
