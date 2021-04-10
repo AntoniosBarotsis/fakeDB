@@ -1,3 +1,4 @@
+const print = require("./log")
 const fs = require('fs');
 
 let data = JSON.parse(fs.readFileSync('data.json', 'utf8'));
@@ -25,16 +26,25 @@ function convertFieldNamesToLowerCase() {
 }
 
 function save(path, obj) {
-
     if (isApplicable(obj, data[path])) {
-        data[path].push(obj)
-        console.log(data);
+        if (entryExists(obj, data[path])) {
 
-        fs.writeFileSync('data.json', JSON.stringify(data))
-        return 200
+            return {'error': 'Object already exists'}
+        } else {
+            data[path].push(obj)
+
+            fs.writeFileSync('data.json', JSON.stringify(data))
+            return 200
+        }
     }
     else 
-        return {'error': 400}
+        return {'error': 'Object type is not applicable'}
+}
+
+function entryExists(reqObj, dataObj) {
+    let res = Object.values(dataObj).filter(el => arraysEqual(Object.values(reqObj), Object.values(el)))
+
+    return res.length > 0
 }
 
 // Checks proper field names as well as field types
@@ -49,7 +59,7 @@ function arraysEqual(a, b) {
     if (a.length !== b.length) return false;
   
     for (var i = 0; i < a.length; ++i) {
-      if (a[i] !== b[i]) return false;
+      if (a[i] !== b[i] && a !== undefined) return false;
     }
     return true;
 }

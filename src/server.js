@@ -74,4 +74,4 @@ let routes = app._router.stack
     }))
     .map(el => `${Object.keys(el.method).map(el => `\x1b[33m${el.toUpperCase()}\x1b[0m`)} - ${el.path.join(', ')}`)
 
-routes.forEach(el => print.mapped(el))
+// routes.forEach(el => print.mapped(el))
