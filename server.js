@@ -23,17 +23,24 @@ app.get(mappings, (req, res) => {
 
   res.send(dataMapper.getDataInPath(url));
 });
+
 app.post(mappings, (req, res) => {
     let result = dataMapper.save(req.url.replace(/^\//, ''), req.body)
 
-    res.sendStatus(result)
+    if (result.error) {
+        res.status(400);
+    }
+    res.send(result)
 });
+
 app.put(mappings, (req, res) => {
     res.send("Hello, world!");
 });
+
 app.delete(mappings, (req, res) => {
     res.send("Hello, world!");
 });
+
 
 
 app.listen(PORT, console.debug(`fakeDB Started at ${PORT}`));

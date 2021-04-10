@@ -34,7 +34,7 @@ function save(path, obj) {
         return 200
     }
     else 
-        return 400
+        return {'error': 400}
 }
 
 // Checks proper field names as well as field types
