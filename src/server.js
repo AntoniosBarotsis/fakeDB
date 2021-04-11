@@ -9,7 +9,7 @@ const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({
-  extended: true
+    extended: true
 }));
 
 app.use(morgan(`\x1b[33m:method\x1b[0m \x1b[36m:url\x1b[0m :statusColor`));
@@ -21,14 +21,16 @@ const mappings = dataMapper.getPaths().map(el => `/${el}`)
 app.get(mappings, (req, res) => {
     let url = req.url.replace(/^\//, '')
 
-  res.send(dataMapper.getDataInPath(url));
+    res.send(dataMapper.getDataInPath(url));
 });
 
 app.post(mappings, (req, res) => {
     let result = dataMapper.save(req.url.replace(/^\//, ''), req.body)
 
     if (result.error) {
-        res.status(400);
+        res.status(400)
+    } else {
+        res.status(200)
     }
     res.send(result)
 });
