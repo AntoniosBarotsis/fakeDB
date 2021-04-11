@@ -26,7 +26,7 @@ function convertFieldNamesToLowerCase() {
 }
 
 function save(path, obj) {
-    if (isApplicable(obj, data[path])) {
+    if (data[path].length === 0 || isApplicable(obj, data[path])) {
         if (entryExists(obj, data[path])) {
 
             return {'error': 'Object already exists'}
