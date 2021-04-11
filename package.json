@@ -1,8 +1,8 @@
 {
-  "name": "fakeDB",
-  "version": "1.0.0",
+  "name": "@antoniosbarotsis/fake-db",
+  "version": "0.0.2",
   "description": "",
-  "main": "index.js",
+  "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",
     "dev": "node src/util/dataMapper.js && nodemon src/server.js"
