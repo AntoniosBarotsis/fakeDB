@@ -1,5 +1,8 @@
 {
   "name": "@antoniosbarotsis/fake-db",
+  "bin": {
+    "<cli_command_name>": "./src/server.js"
+  },
   "version": "0.0.2",
   "description": "",
   "main": "src/server.js",
@@ -10,6 +13,9 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/AntoniosBarotsis/fakeDB.git"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
   },
   "keywords": [],
   "author": "",
