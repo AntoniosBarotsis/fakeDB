@@ -26,6 +26,7 @@
   "homepage": "https://github.com/AntoniosBarotsis/fakeDB#readme",
   "dependencies": {
     "express": "^4.17.1",
+    "lodash": "^4.17.21",
     "morgan": "^1.10.0"
   },
   "devDependencies": {
