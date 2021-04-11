@@ -34,31 +34,33 @@ app.get(mappingsWithID, (req, res) => {
 app.post(mappings, (req, res) => {
     let result = dataMapper.save(req.url.replace(/^\//, ''), req.body)
 
-    if (result.error) {
-        res.status(400)
-    } else {
-        res.status(200)
-    }
-    res.send(result)
+    handleResponce(result, res)
 });
 
 app.put(mappingsWithID, (req, res) => {
     let url = req.url.replace(/^\//, '').replace(/\/[0-9]*/, '')
 
     let result = dataMapper.put(url, req.body, req.params.id)
-    
+
+    handleResponce(result, res)
+});
+
+app.delete(mappingsWithID, (req, res) => {
+    let url = req.url.replace(/^\//, '').replace(/\/[0-9]*/, '')
+
+    let result = dataMapper.deleteById(url, req.params.id)
+
+    handleResponce(result, res)
+});
+
+function handleResponce(result, responce) {
     if (result.error) {
-        res.status(400)
+        responce.status(400)
     } else {
-        res.status(200)
+        responce.status(200)
     }
-    res.send(result)
-});
-
-app.delete(mappings, (req, res) => {
-    res.send("Hello, world!");
-});
-
+    responce.send(result)
+}
 
 
 app.listen(PORT, console.debug(`fakeDB Started at ${PORT}`));

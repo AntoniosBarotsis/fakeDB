@@ -73,6 +73,28 @@ function put(path, obj, id) {
     return { error: 'Object not found' }
 }
 
+function deleteById(path, id) {
+    let arr = _.cloneDeep(data[path])
+    let tmp = null
+    
+    arr = arr.filter(el => {
+        if (el.id !== Number(id))
+            return true
+        else
+            tmp = el
+    })
+
+    if (_.isEqual(data[path], arr)) {
+        return { error: 'Object not found' }
+    } else {
+        data[path] = arr
+
+        fs.writeFileSync('data.json', JSON.stringify(data))
+
+        return tmp
+    }
+}
+
 function generateId(path, obj) {
     return obj = { ...obj, id: data[path].length + 1}
 }
@@ -114,4 +136,4 @@ function isApplicable(reqObj, dataObj) {
         _.isEqual(Object.values(reqObj).map(el => typeof el), Object.values(dataObj[0]).map(el => typeof el))
 }
 
-module.exports = { getPaths, getDataInPath, save, findById, put }
+module.exports = { getPaths, getDataInPath, save, findById, put, deleteById }
