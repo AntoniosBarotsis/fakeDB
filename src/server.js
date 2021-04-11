@@ -42,8 +42,17 @@ app.post(mappings, (req, res) => {
     res.send(result)
 });
 
-app.put(mappings, (req, res) => {
-    res.send("Hello, world!");
+app.put(mappingsWithID, (req, res) => {
+    let url = req.url.replace(/^\//, '').replace(/\/[0-9]*/, '')
+
+    let result = dataMapper.put(url, req.body, req.params.id)
+    
+    if (result.error) {
+        res.status(400)
+    } else {
+        res.status(200)
+    }
+    res.send(result)
 });
 
 app.delete(mappings, (req, res) => {

@@ -56,6 +56,23 @@ function findById(path, id) {
     return res
 }
 
+function put(path, obj, id) {
+    for (let i = 0; i < data[path].length; i++) {
+        if (data[path][i].id === Number(id)) {
+            obj = { ...obj, id: data[path][i].id }
+
+            if (isApplicable(obj, data[path])) {
+                data[path][i] = obj
+                
+                fs.writeFileSync('data.json', JSON.stringify(data))
+                return obj
+            }
+        }
+    }
+
+    return { error: 'Object not found' }
+}
+
 function generateId(path, obj) {
     return obj = { ...obj, id: data[path].length + 1}
 }
@@ -97,4 +114,4 @@ function isApplicable(reqObj, dataObj) {
         _.isEqual(Object.values(reqObj).map(el => typeof el), Object.values(dataObj[0]).map(el => typeof el))
 }
 
-module.exports = { getPaths, getDataInPath, save, findById }
+module.exports = { getPaths, getDataInPath, save, findById, put }
