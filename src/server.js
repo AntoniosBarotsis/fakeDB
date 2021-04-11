@@ -17,11 +17,18 @@ app.use(morgan(`\x1b[33m:method\x1b[0m \x1b[36m:url\x1b[0m :statusColor`));
 
 // Create routes
 const mappings = dataMapper.getPaths().map(el => `/${el}`)
+const mappingsWithID = mappings.map(el => `${el}/:id`)
 
 app.get(mappings, (req, res) => {
     let url = req.url.replace(/^\//, '')
 
     res.send(dataMapper.getDataInPath(url));
+});
+
+app.get(mappingsWithID, (req, res) => {
+    let url = req.url.replace(/^\//, '').replace(/\/[0-9]*/, '')
+
+    res.send(dataMapper.findById(url, req.params.id))
 });
 
 app.post(mappings, (req, res) => {
@@ -76,4 +83,4 @@ let routes = app._router.stack
     }))
     .map(el => `${Object.keys(el.method).map(el => `\x1b[33m${el.toUpperCase()}\x1b[0m`)} - ${el.path.join(', ')}`)
 
-// routes.forEach(el => print.mapped(el))
+routes.forEach(el => print.mapped(el))

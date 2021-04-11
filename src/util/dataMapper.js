@@ -49,6 +49,13 @@ function save(path, obj) {
         return {'error': 'Object type is not applicable'}
 }
 
+function findById(path, id) {
+    let res = _.cloneDeep(data[path])
+        .filter(el => el.id === Number(id))[0]
+
+    return res
+}
+
 function generateId(path, obj) {
     return obj = { ...obj, id: data[path].length + 1}
 }
@@ -90,4 +97,4 @@ function isApplicable(reqObj, dataObj) {
         _.isEqual(Object.values(reqObj).map(el => typeof el), Object.values(dataObj[0]).map(el => typeof el))
 }
 
-module.exports = { getPaths, getDataInPath, save }
+module.exports = { getPaths, getDataInPath, save, findById }
