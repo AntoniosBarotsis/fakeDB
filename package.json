@@ -3,7 +3,7 @@
   "bin": {
     "<cli_command_name>": "src/app.js"
   },
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "",
   "main": "src/app.js",
   "scripts": {
