@@ -15,7 +15,6 @@ function getDataInPath (path) {
 }
 
 function init() {
-    addIdsIfNeeded()
     let dataChanged = convertFieldNamesToLowerCase()
 
     if (data[state] === undefined) {
@@ -32,6 +31,8 @@ function init() {
         data = tmpArray
         dataChanged = true
     }
+
+    addIdsIfNeeded()
 
     if (dataChanged)
         fs.writeFileSync('data.json', JSON.stringify(data))
