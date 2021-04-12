@@ -7,9 +7,9 @@
   "description": "",
   "main": "src/app.js",
   "scripts": {
-    "start": "node src/util/init.js && nodemon src/app.js",
+    "start": "node src/util/init.js && node src/app.js",
     "test": "",
-    "dev": "node src/util/init.js && nodemon src/app.js"
+    "dev": "node src/util/init.js && node src/app.js"
   },
   "repository": {
     "type": "git",
@@ -29,8 +29,5 @@
     "express": "^4.17.1",
     "lodash": "^4.17.21",
     "morgan": "^1.10.0"
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.7"
   }
 }
