@@ -18,7 +18,6 @@ function init() {
     addIdsIfNeeded()
     let dataChanged = convertFieldNamesToLowerCase()
 
-    console.log(data[state]);
     if (data[state] === undefined) {
         data[state] = {}
         dataChanged = true
@@ -26,7 +25,6 @@ function init() {
 
     let tmpArray = _.cloneDeep(data)
     getPaths().forEach(el => {
-        console.log(data[el].map(el1 => el1.id).sort((a, b) => b - a)[0] + 1 || 1);
         tmpArray[state][el] = {counter: data[el].map(el1 => el1.id).sort((a, b) => b - a)[0] + 1 || 1}
     })
 

@@ -2,9 +2,9 @@ const fs = require('fs');
 const _ = require('lodash');
 const dataMapper = require('./util/dataMapper')
 const print = require("./util/log")
+const state = 'state'
 
 let data = JSON.parse(fs.readFileSync('data.json', 'utf8'));
-console.log(data['state']);
 
 
 function save(path, obj) {
@@ -16,7 +16,9 @@ function save(path, obj) {
         } else {
             data[path].push(dataMapper.generateId(path, obj2))
 
+            data[state] = JSON.parse(fs.readFileSync('data.json', 'utf8'))[state];
             fs.writeFileSync('data.json', JSON.stringify(data))
+
             return 200
         }
     }
