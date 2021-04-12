@@ -1,4 +1,4 @@
-[![NPM Version](https://img.shields.io/npm/v/@antoniosbarotsis/fake-db?style=flat)]()
+[![NPM Version](https://img.shields.io/npm/v/@antoniosbarotsis/fake-db?style=flat)](https://www.npmjs.com/package/@antoniosbarotsis/fake-db)
 [![NPM License](https://img.shields.io/npm/l/all-contributors.svg?style=flat)](https://github.com/AntoniosBarotsis/fakeDB/blob/master/LICENSE)
 
 # Fake-DB
