@@ -1,7 +1,8 @@
 const express = require("express")
 const morgan = require('morgan')
-const dataMapper = require("./util/dataMapper")
+const service = require("./service")
 const print = require("./util/log")
+const dataMapper = require("./util/dataMapper")
 
 const PORT = process.env.PORT || 8000
 
@@ -28,11 +29,11 @@ app.get(mappings, (req, res) => {
 app.get(mappingsWithID, (req, res) => {
     let url = req.url.replace(/^\//, '').replace(/\/[0-9]*/, '')
 
-    res.send(dataMapper.findById(url, req.params.id))
+    res.send(service.findById(url, req.params.id))
 });
 
 app.post(mappings, (req, res) => {
-    let result = dataMapper.save(req.url.replace(/^\//, ''), req.body)
+    let result = service.save(req.url.replace(/^\//, ''), req.body)
 
     handleResponce(result, res)
 });
@@ -40,7 +41,7 @@ app.post(mappings, (req, res) => {
 app.put(mappingsWithID, (req, res) => {
     let url = req.url.replace(/^\//, '').replace(/\/[0-9]*/, '')
 
-    let result = dataMapper.put(url, req.body, req.params.id)
+    let result = service.put(url, req.body, req.params.id)
 
     handleResponce(result, res)
 });
@@ -48,7 +49,7 @@ app.put(mappingsWithID, (req, res) => {
 app.delete(mappingsWithID, (req, res) => {
     let url = req.url.replace(/^\//, '').replace(/\/[0-9]*/, '')
 
-    let result = dataMapper.deleteById(url, req.params.id)
+    let result = service.deleteById(url, req.params.id)
 
     handleResponce(result, res)
 });

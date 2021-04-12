@@ -1,15 +1,15 @@
 {
   "name": "@antoniosbarotsis/fake-db",
   "bin": {
-    "<cli_command_name>": "src/server.js"
+    "<cli_command_name>": "src/app.js"
   },
   "version": "0.3.0",
   "description": "",
-  "main": "src/server.js",
+  "main": "src/app.js",
   "scripts": {
-    "start": "node src/server.js",
+    "start": "node src/util/init.js && nodemon src/app.js",
     "test": "",
-    "dev": "node src/util/dataMapper.js && nodemon src/server.js"
+    "dev": "node src/util/init.js && nodemon src/app.js"
   },
   "repository": {
     "type": "git",

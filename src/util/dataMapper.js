@@ -1,18 +1,42 @@
-const print = require("./log")
 const fs = require('fs');
 const _ = require('lodash');
+const print = require("./log")
+const state = 'state'
 
 let data = JSON.parse(fs.readFileSync('data.json', 'utf8'));
-addIdsIfNeeded()
-convertFieldNamesToLowerCase()
 
 
 function getPaths () {
-    return Object.keys(data)
+    return Object.keys(data).filter(el => el !== 'state')
 }
 
 function getDataInPath (path) {
     return data[path]
+}
+
+function init() {
+    addIdsIfNeeded()
+    let dataChanged = convertFieldNamesToLowerCase()
+
+    console.log(data[state]);
+    if (data[state] === undefined) {
+        data[state] = {}
+        dataChanged = true
+    }
+
+    let tmpArray = _.cloneDeep(data)
+    getPaths().forEach(el => {
+        console.log(data[el].map(el1 => el1.id).sort((a, b) => b - a)[0] + 1 || 1);
+        tmpArray[state][el] = {counter: data[el].map(el1 => el1.id).sort((a, b) => b - a)[0] + 1 || 1}
+    })
+
+    if (!_.isEqual(data, tmpArray)) {
+        data = tmpArray
+        dataChanged = true
+    }
+
+    if (dataChanged)
+        fs.writeFileSync('data.json', JSON.stringify(data))
 }
 
 function convertFieldNamesToLowerCase() {
@@ -25,78 +49,19 @@ function convertFieldNamesToLowerCase() {
     })
 
     if (JSON.stringify(data) === JSON.stringify(dataCopy))
-        return
+        return false
 
     data = dataCopy
-    fs.writeFileSync('data.json', JSON.stringify(data))
-}
-
-function save(path, obj) {
-    let obj2 = generateId(path, obj)
-
-    if (data[path].length === 0 || isApplicable(obj2, data[path])) {
-        if (entryExists(obj2, data[path])) {
-
-            return {'error': 'Object already exists'}
-        } else {
-            data[path].push(obj2)
-
-            fs.writeFileSync('data.json', JSON.stringify(data))
-            return 200
-        }
-    }
-    else 
-        return {'error': 'Object type is not applicable'}
-}
-
-function findById(path, id) {
-    let res = _.cloneDeep(data[path])
-        .filter(el => el.id === Number(id))[0]
-
-    return res
-}
-
-function put(path, obj, id) {
-    for (let i = 0; i < data[path].length; i++) {
-        if (data[path][i].id === Number(id)) {
-            obj = { ...obj, id: data[path][i].id }
-
-            if (isApplicable(obj, data[path])) {
-                data[path][i] = obj
-                
-                fs.writeFileSync('data.json', JSON.stringify(data))
-                return obj
-            }
-        }
-    }
-
-    return { error: 'Object not found' }
-}
-
-function deleteById(path, id) {
-    let arr = _.cloneDeep(data[path])
-    let tmp = null
-    
-    arr = arr.filter(el => {
-        if (el.id !== Number(id))
-            return true
-        else
-            tmp = el
-    })
-
-    if (_.isEqual(data[path], arr)) {
-        return { error: 'Object not found' }
-    } else {
-        data[path] = arr
-
-        fs.writeFileSync('data.json', JSON.stringify(data))
-
-        return tmp
-    }
 }
 
 function generateId(path, obj) {
-    return obj = { ...obj, id: data[path].length + 1}
+    obj = { ...obj, id: data[state][path].counter }
+
+    data[state][path].counter = data[state][path].counter + 1
+
+    fs.writeFileSync('data.json', JSON.stringify(data))
+    
+    return obj
 }
 
 function addIdsIfNeeded() {
@@ -113,7 +78,6 @@ function addIdsIfNeeded() {
         return
 
     data = dataCopy
-    fs.writeFileSync('data.json', JSON.stringify(data))
 }
 
 function entryExists(reqObj, dataObj) {
@@ -136,4 +100,4 @@ function isApplicable(reqObj, dataObj) {
         _.isEqual(Object.values(reqObj).map(el => typeof el), Object.values(dataObj[0]).map(el => typeof el))
 }
 
-module.exports = { getPaths, getDataInPath, save, findById, put, deleteById }
+module.exports = { getPaths, getDataInPath, generateId, isApplicable, entryExists, addIdsIfNeeded, convertFieldNamesToLowerCase, init }
