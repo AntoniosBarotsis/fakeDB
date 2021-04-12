@@ -16,7 +16,7 @@
     "url": "git+https://github.com/AntoniosBarotsis/fakeDB.git"
   },
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
+    "registry": "https://registry.npmjs.org/"
   },
   "keywords": [],
   "author": "",
