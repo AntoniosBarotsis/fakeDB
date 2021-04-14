@@ -1,5 +1,6 @@
-[![NPM Version](https://img.shields.io/npm/v/@antoniosbarotsis/fake-db?style=flat)](https://www.npmjs.com/package/@antoniosbarotsis/fake-db)
 [![NPM License](https://img.shields.io/npm/l/all-contributors.svg?style=flat)](https://github.com/AntoniosBarotsis/fakeDB/blob/master/LICENSE)
+[![NPM Version](https://img.shields.io/npm/v/@antoniosbarotsis/fake-db?style=flat)](https://www.npmjs.com/package/@antoniosbarotsis/fake-db)
+[![NPM Downloads](https://img.shields.io/npm/dt/@antoniosbarotsis/fake-db)](https://www.npmjs.com/package/@antoniosbarotsis/fake-db)
 
 # Fake-DB
 
@@ -13,14 +14,28 @@ mock to aid front-end development.
 
 Install the package with `npm i @antoniosbarotsis/fake-db`.
 
-To use it you just have to import it like so
+Make sure to create a `data.json` file at the root of
+your project.
+
+To use it you just have to import it and run `start()`
 
 ```js
 const db = require('@antoniosbarotsis/fake-db')
+
+db.start(8000) // Starts the server
 ```
 
-Make sure to create a `data.json` file at the root of
-your project.
+Alternatively you can do the following:
+
+```js
+const { start } = require('@antoniosbarotsis/fake-db')
+
+start(8000)
+```
+
+The `start` method takes in the port and filename as an arguments. If no port is specified then
+`process.env.PORT` will be used. If that is also undefined then `8000` will be picked. The default
+file name is `data.json`.
 
 ## Usage
 
