@@ -1,13 +1,10 @@
 {
   "name": "@antoniosbarotsis/fake-db",
-  "bin": {
-    "<cli_command_name>": "src/app.js"
-  },
   "version": "0.3.1",
   "description": "",
   "main": "src/app.js",
   "scripts": {
-    "start": "node src/util/init.js && node src/app.js",
+    "start": "",
     "test": "",
     "dev": "node src/util/init.js && node src/app.js"
   },
@@ -18,9 +15,13 @@
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
-  "keywords": [],
+  "keywords": [
+    "mock",
+    "api",
+    "in-memory-database"
+  ],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/AntoniosBarotsis/fakeDB/issues"
   },
