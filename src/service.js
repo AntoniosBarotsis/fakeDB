@@ -3,8 +3,9 @@ const _ = require('lodash');
 const dataMapper = require('./util/dataMapper')
 const print = require("./util/log")
 const state = 'state'
+const fileName = process.env.FILENAME
 
-let data = JSON.parse(fs.readFileSync('data.json', 'utf8'));
+let data = JSON.parse(fs.readFileSync(fileName, 'utf8'));
 
 
 function save(path, obj) {
@@ -16,8 +17,8 @@ function save(path, obj) {
         } else {
             data[path].push(dataMapper.generateId(path, obj2))
 
-            data[state] = JSON.parse(fs.readFileSync('data.json', 'utf8'))[state];
-            fs.writeFileSync('data.json', JSON.stringify(data))
+            data[state] = JSON.parse(fs.readFileSync(fileName, 'utf8'))[state];
+            fs.writeFileSync(fileName, JSON.stringify(data))
 
             return 200
         }
@@ -41,7 +42,7 @@ function put(path, obj, id) {
             if (dataMapper.isApplicable(obj, data[path])) {
                 data[path][i] = obj
                 
-                fs.writeFileSync('data.json', JSON.stringify(data))
+                fs.writeFileSync(fileName, JSON.stringify(data))
                 return obj
             }
         }
@@ -66,7 +67,7 @@ function deleteById(path, id) {
     } else {
         data[path] = arr
 
-        fs.writeFileSync('data.json', JSON.stringify(data))
+        fs.writeFileSync(fileName, JSON.stringify(data))
 
         return tmp
     }

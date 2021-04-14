@@ -2,8 +2,9 @@ const fs = require('fs');
 const _ = require('lodash');
 const print = require("./log")
 const state = 'state'
+const fileName = process.env.FILENAME
 
-let data = JSON.parse(fs.readFileSync('data.json', 'utf8'));
+let data = JSON.parse(fs.readFileSync(fileName, 'utf8'));
 
 
 function getPaths () {
@@ -35,7 +36,7 @@ function init() {
     addIdsIfNeeded()
 
     if (dataChanged)
-        fs.writeFileSync('data.json', JSON.stringify(data))
+        fs.writeFileSync(fileName, JSON.stringify(data))
 }
 
 function convertFieldNamesToLowerCase() {
@@ -58,7 +59,7 @@ function generateId(path, obj) {
 
     data[state][path].counter = data[state][path].counter + 1
 
-    fs.writeFileSync('data.json', JSON.stringify(data))
+    fs.writeFileSync(fileName, JSON.stringify(data))
     
     return obj
 }
